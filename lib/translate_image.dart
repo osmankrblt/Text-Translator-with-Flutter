@@ -42,11 +42,13 @@ class _TranslateImagePageState extends State<TranslateImagePage> {
                 0.5,
               ),
             ),
-            showResult(100),
             showButtons(
               context.dynamicHeight(
                 0.1,
               ),
+            ),
+            Expanded(
+              child: showResult(100),
             ),
           ],
         ),
@@ -100,28 +102,27 @@ class _TranslateImagePageState extends State<TranslateImagePage> {
   Container showImage(double height) {
     return Container(
       height: height,
-      child: selectedImage != null
-          ? Container(
-              margin: const EdgeInsets.all(30.0),
-              decoration: BoxDecoration(
-                image: DecorationImage(
+      child: Container(
+        margin: const EdgeInsets.all(30.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          image: selectedImage != null
+              ? DecorationImage(
                   image: FileImage(
                     File(
                       selectedImage!.path,
                     ),
                   ),
-                ),
-              ),
-            )
-          : Container(
-              margin: const EdgeInsets.all(30.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(
-                  color: Colors.black,
-                ),
-              ),
-            ),
+                )
+              : null,
+          borderRadius: BorderRadius.circular(
+            15.0,
+          ),
+          border: Border.all(
+            color: Colors.black,
+          ),
+        ),
+      ),
     );
   }
 
@@ -152,7 +153,6 @@ class _TranslateImagePageState extends State<TranslateImagePage> {
         ? const CircularProgressIndicator()
         : providerTranslate.translated_text != null
             ? Stack(
-                fit: StackFit.loose,
                 children: [
                   Positioned(
                     top: 0,
@@ -182,8 +182,11 @@ class _TranslateImagePageState extends State<TranslateImagePage> {
                         15,
                       ),
                     ),
-                    child: SelectableText(
-                      providerTranslate.translated_text!,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: SelectableText(
+                        providerTranslate.translated_text!,
+                      ),
                     ),
                   ),
                 ],
